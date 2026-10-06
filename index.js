@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { ApolloServer } = require('@apollo/server');
+const { ApolloServerPluginLandingPageLocalDefault } = require('@apollo/server/plugin/landingPage/default');
 const { expressMiddleware } = require('@as-integrations/express5');
 const cors = require('cors');
 const mongoose = require('mongoose');
@@ -16,6 +17,9 @@ async function startServer() {
     typeDefs,
     resolvers,
     introspection: true, // Habilitar instrospeccion siempre (incluso en producción para Render)
+    plugins: [
+      ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+    ],
   });
 
   await server.start();
